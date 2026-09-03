@@ -317,6 +317,42 @@ textarea{resize:vertical}
             </article>
           </sc-for>
 
+          <section style="background:var(--surface);border:1px solid var(--line);border-radius:14px;overflow:hidden">
+            <button type="button" onClick="{{ toggleLead }}" aria-expanded="{{ leadOpen }}" style="width:100%;appearance:none;background:none;border:0;padding:14px 15px;display:flex;align-items:center;gap:10px;text-align:left">
+              <span style="width:22px;height:22px;flex-shrink:0;border-radius:50%;border:1.5px solid var(--muted);color:var(--muted);display:grid;place-items:center;font-family:'DM Mono',monospace;font-size:12px">i</span>
+              <span style="flex:1 1 auto;font-family:'DM Mono',monospace;font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-2)">Cómo enfocar {{ dayArticle }}</span>
+              <span style="color:var(--muted);font-size:13px">{{ leadCaret }}</span>
+            </button>
+            <sc-if value="{{ leadOpen }}" hint-placeholder-val="{{ false }}">
+              <div style="padding:0 16px 18px;display:flex;flex-direction:column;gap:16px">
+                <p style="margin:0;font-size:13.5px;color:var(--ink-2);text-wrap:pretty;max-width:62ch">{{ dayLead }}</p>
+
+                <sc-if value="{{ isDouble }}" hint-placeholder-val="{{ true }}">
+                  <div>
+                    <p style="margin:0 0 8px;font-family:'DM Mono',monospace;font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--kind)">Reglas de la jornada doble</p>
+                    <ol style="margin:0;padding-left:17px;display:flex;flex-direction:column;gap:9px;font-size:13.5px;color:var(--ink-2);max-width:62ch">
+                      <sc-for list="{{ doubleRules }}" as="r" hint-placeholder-count="3">
+                        <li><b style="color:var(--ink)">{{ r.lead }}</b>{{ r.rest }}</li>
+                      </sc-for>
+                    </ol>
+                  </div>
+                </sc-if>
+
+                <div>
+                  <p style="margin:0 0 8px;font-family:'DM Mono',monospace;font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)">Cómo leer la rutina</p>
+                  <dl style="margin:0;display:flex;flex-direction:column;gap:11px;max-width:62ch">
+                    <sc-for list="{{ legend }}" as="l" hint-placeholder-count="4">
+                      <div>
+                        <dt style="font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.13em;text-transform:uppercase;color:var(--muted)">{{ l.term }}</dt>
+                        <dd style="margin:3px 0 0;font-size:13.5px;color:var(--ink-2)">{{ l.desc }}</dd>
+                      </div>
+                    </sc-for>
+                  </dl>
+                </div>
+              </div>
+            </sc-if>
+          </section>
+
           <sc-if value="{{ hasSets }}" hint-placeholder-val="{{ false }}">
             <div style="display:flex;justify-content:flex-end;padding:2px 2px 0">
               <button type="button" onClick="{{ resetDay }}" style="appearance:none;background:none;border:0;padding:6px 2px;font-family:'DM Mono',monospace;font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);text-decoration:underline;text-underline-offset:3px">Reiniciar el día</button>
@@ -326,17 +362,6 @@ textarea{resize:vertical}
         </section>
       </div>
     </sc-if>
-
-    <section style="margin:26px 0 0;background:var(--surface);border:1px solid var(--line);border-radius:14px;overflow:hidden">
-      <button type="button" onClick="{{ toggleLead }}" aria-expanded="{{ leadOpen }}" style="width:100%;appearance:none;background:none;border:0;padding:14px 15px;display:flex;align-items:center;gap:10px;text-align:left">
-        <span style="width:22px;height:22px;flex-shrink:0;border-radius:50%;border:1.5px solid var(--muted);color:var(--muted);display:grid;place-items:center;font-family:'DM Mono',monospace;font-size:12px">i</span>
-        <span style="flex:1 1 auto;font-family:'DM Mono',monospace;font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-2)">Cómo enfocar {{ dayArticle }}</span>
-        <span style="color:var(--muted);font-size:13px">{{ leadCaret }}</span>
-      </button>
-      <sc-if value="{{ leadOpen }}" hint-placeholder-val="{{ false }}">
-        <p style="margin:0;padding:0 16px 16px;font-size:13.5px;color:var(--ink-2);text-wrap:pretty;max-width:62ch">{{ dayLead }}</p>
-      </sc-if>
-    </section>
 
     <p style="margin:22px 0 0;font-size:11.5px;color:var(--muted);text-align:center;line-height:1.6">Selección de ejercicios según Neco y Andoni — <em>El mejor ejercicio para cada músculo</em>.<br />Fotografías: <a href="https://github.com/yuhonas/free-exercise-db">free-exercise-db</a>, licencia Unlicense.<br />Animaciones © <a href="https://gymvisual.com/">Gym visual</a>, enlazadas desde <a href="https://github.com/hasaneyldrm/exercises-dataset">exercises-dataset</a>.</p>
 
@@ -352,30 +377,20 @@ textarea{resize:vertical}
 
         <sc-if value="{{ modalIsDouble }}" hint-placeholder-val="{{ true }}">
           <ol style="margin:0;padding:15px 18px 22px 34px;display:flex;flex-direction:column;gap:11px;font-size:13.5px;color:var(--ink-2)">
-            <li><b style="color:var(--ink)">Separa las sesiones al menos 6 h.</b> Si corres a las 8:00, pesas a partir de las 14:00. Así las señales de resistencia (AMPK) no apagan las de crecimiento (mTOR).</li>
-            <li><b style="color:var(--ink)">Si no puedes separarlas, pesas primero</b>, descansa 10-15 min y sal a correr. Al revés llegas al gimnasio con el sistema nervioso fatigado y tus marcas caen.</li>
-            <li><b style="color:var(--ink)">Proteína e hidratación impecables</b>, y una pizca de sal en el agua para reponer electrolitos.</li>
+            <sc-for list="{{ doubleRules }}" as="r" hint-placeholder-count="3">
+              <li><b style="color:var(--ink)">{{ r.lead }}</b>{{ r.rest }}</li>
+            </sc-for>
           </ol>
         </sc-if>
 
         <sc-if value="{{ modalIsRir }}" hint-placeholder-val="{{ false }}">
           <dl style="margin:0;padding:15px 18px 22px;display:flex;flex-direction:column;gap:13px">
-            <div>
-              <dt style="font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.13em;text-transform:uppercase;color:var(--muted)">RIR</dt>
-              <dd style="margin:3px 0 0;font-size:13.5px;color:var(--ink-2)">Repeticiones en recámara: las que <em>podrías</em> hacer aún al terminar la serie. RIR 0 = al fallo.</dd>
-            </div>
-            <div>
-              <dt style="font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.13em;text-transform:uppercase;color:var(--muted)">Volumen semanal</dt>
-              <dd style="margin:3px 0 0;font-size:13.5px;color:var(--ink-2)">5 a 15 series efectivas por grupo muscular. Esta rutina se mantiene dentro del rango.</dd>
-            </div>
-            <div>
-              <dt style="font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.13em;text-transform:uppercase;color:var(--muted)">Efecto interferencia</dt>
-              <dd style="margin:3px 0 0;font-size:13.5px;color:var(--ink-2)">Correr y levantar compiten por la recuperación. Por eso las dobles caen en día de torso.</dd>
-            </div>
-            <div>
-              <dt style="font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.13em;text-transform:uppercase;color:var(--muted)">Sueño</dt>
-              <dd style="margin:3px 0 0;font-size:13.5px;color:var(--ink-2)">Una sola noche mala puede reducir la síntesis de proteínas un 18 %. Es parte del entrenamiento.</dd>
-            </div>
+            <sc-for list="{{ legend }}" as="l" hint-placeholder-count="4">
+              <div>
+                <dt style="font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.13em;text-transform:uppercase;color:var(--muted)">{{ l.term }}</dt>
+                <dd style="margin:3px 0 0;font-size:13.5px;color:var(--ink-2)">{{ l.desc }}</dd>
+              </div>
+            </sc-for>
           </dl>
         </sc-if>
       </div>
@@ -492,6 +507,20 @@ DAYS.forEach(d => { BY_KEY[d.key] = d; });
 const LETTER = {lun:'L',mar:'M',mie:'X',jue:'J',vie:'V',sab:'S',dom:'D'};
 const KINDVAR = {torso:'var(--clay)',pierna:'var(--ochre)',run:'var(--sage)',rest:'var(--taupe)'};
 const KINDLBL = {torso:'Fuerza · torso',pierna:'Fuerza · pierna',run:'Running',rest:'Descanso'};
+/* Los textos informativos viven aquí una sola vez: los pintan tanto los
+   modales de la card como el acordeón del final. */
+const DOUBLE_RULES = [
+  { lead: 'Separa las sesiones al menos 6 h.', rest: ' Si corres a las 8:00, pesas a partir de las 14:00. Así las señales de resistencia (AMPK) no apagan las de crecimiento (mTOR).' },
+  { lead: 'Si no puedes separarlas, pesas primero', rest: ', descansa 10-15 min y sal a correr. Al revés llegas al gimnasio con el sistema nervioso fatigado y tus marcas caen.' },
+  { lead: 'Proteína e hidratación impecables', rest: ', y una pizca de sal en el agua para reponer electrolitos.' }
+];
+const LEGEND = [
+  { term: 'RIR', desc: 'Repeticiones en recámara: las que podrías hacer aún al terminar la serie. RIR 0 = al fallo.' },
+  { term: 'Volumen semanal', desc: '5 a 15 series efectivas por grupo muscular. Esta rutina se mantiene dentro del rango.' },
+  { term: 'Efecto interferencia', desc: 'Correr y levantar compiten por la recuperación. Por eso las dobles caen en día de torso.' },
+  { term: 'Sueño', desc: 'Una sola noche mala puede reducir la síntesis de proteínas un 18 %. Es parte del entrenamiento.' }
+];
+
 const STORE_KEY = 'entreno-log-v1';
 const MONTH = ['ene','feb','mar','abr','may','jun','jul','ago','sep','oct','nov','dic'];
 
@@ -777,6 +806,7 @@ class Component extends DCLogic {
       isDouble: !!day.double,
 
       mixesRun, runLabel,
+      doubleRules: DOUBLE_RULES, legend: LEGEND,
       dayArticle: 'el ' + day.name.toLowerCase(),
       leadOpen: st.leadOpen, leadCaret: st.leadOpen ? '▲' : '▼',
       toggleLead: () => this.setState({ leadOpen: !st.leadOpen }),
