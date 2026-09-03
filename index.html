@@ -210,15 +210,17 @@ textarea{resize:vertical}
             <article style="background:var(--surface);border:1px solid {{ ex.cardBorder }};border-radius:16px;box-shadow:var(--shadow);overflow:hidden">
 
               <div style="padding:12px 13px;display:flex;gap:12px;align-items:flex-start">
-                <sc-if value="{{ ex.hasGif }}" hint-placeholder-val="{{ true }}">
-                  <img src="{{ ex.gifSrc }}" alt="" style="width:54px;height:54px;flex-shrink:0;border-radius:10px;object-fit:cover;background:var(--surface-2);border:1px solid var(--line);display:block" />
-                </sc-if>
-                <sc-if value="{{ ex.noGif }}" hint-placeholder-val="{{ false }}">
-                  <span class="mv" style="width:54px;height:54px;flex-shrink:0;border-radius:10px;background:var(--surface-2);border:1px solid var(--line)">
-                    <img src="{{ ex.photoStart }}" alt="" />
-                    <img class="f2" src="{{ ex.photoEnd }}" alt="" />
-                  </span>
-                </sc-if>
+                <button type="button" onClick="{{ ex.toggleOpen }}" title="Técnica y alternativas" aria-label="Técnica y alternativas de {{ ex.name }}" style="appearance:none;padding:0;margin:0;width:54px;height:54px;flex-shrink:0;border-radius:10px;overflow:hidden;border:1px solid {{ ex.infoBorder }};background:var(--surface-2);display:block">
+                  <sc-if value="{{ ex.hasGif }}" hint-placeholder-val="{{ true }}">
+                    <img src="{{ ex.gifSrc }}" alt="" style="width:100%;height:100%;object-fit:cover;display:block" />
+                  </sc-if>
+                  <sc-if value="{{ ex.noGif }}" hint-placeholder-val="{{ false }}">
+                    <span class="mv" style="width:100%;height:100%">
+                      <img src="{{ ex.photoStart }}" alt="" />
+                      <img class="f2" src="{{ ex.photoEnd }}" alt="" />
+                    </span>
+                  </sc-if>
+                </button>
                 <div style="flex:1 1 auto;min-width:0;display:flex;flex-direction:column;gap:2px">
                   <span style="font-family:'DM Mono',monospace;font-size:9.5px;font-weight:500;letter-spacing:.14em;text-transform:uppercase;color:var(--kind)">{{ ex.group }}</span>
                   <h2 style="margin:0;font-family:'Bricolage Grotesque',sans-serif;font-weight:700;font-size:17px;letter-spacing:-.02em;line-height:1.18;text-wrap:pretty">{{ ex.name }}</h2>
