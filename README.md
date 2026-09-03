@@ -23,6 +23,7 @@ Todo se guarda en el navegador del móvil (`localStorage`); no hay servidor ni c
 | `Entreno.dc.html` | **La fuente.** Diseño y lógica, editable en Claude Design. |
 | `fotos/` | Las 76 fotos de ejercicios a 560 px. |
 | `generador/gifs.json` | Qué animación de Gym visual corresponde a cada ejercicio. |
+| `generador/sync_gifs.py` | Vuelca `gifs.json` en la tabla `GIFS` de `Entreno.dc.html`. |
 | `vendor/` | React, ReactDOM y el runtime `support.js`, servidos desde el repo. |
 | `generador/build_dc.py` | Convierte `Entreno.dc.html` en `index.html`. |
 | `generador/routine.py` | Datos de la rutina: días, ejercicios, series, reps, RIR y notas. |
@@ -36,6 +37,7 @@ Todo se guarda en el navegador del móvil (`localStorage`); no hay servidor ni c
 ## Regenerar la app
 
 ```sh
+python3 generador/sync_gifs.py   # sólo si cambiaste gifs.json
 python3 generador/build_dc.py    # Entreno.dc.html -> index.html
 ```
 
@@ -69,7 +71,7 @@ este repositorio**: se enlazan desde
 a través del CDN de jsDelivr, conservando la atribución exigida, que aparece en
 el pie de la app. Su reutilización se rige por los
 [términos de Gym visual](https://gymvisual.com/content/3-terms-and-conditions-of-use).
-Los tres días de running no tienen animación y usan la secuencia de fotos.
+Los 22 ejercicios tienen animación, incluidos los tres días de running.
 
 React 18.3.1 (MIT), servido desde `vendor/`; los hashes SRI coinciden con los
 que espera `support.js`.
