@@ -52,19 +52,6 @@ textarea{resize:vertical}
 .mv .f2{position:absolute;inset:0;animation:mvflip 1.5s steps(1,end) infinite}
 @keyframes mvflip{0%,50%{opacity:0}50.01%,100%{opacity:1}}
 @media (prefers-reduced-motion:reduce){.mv .f2{animation:none;opacity:0}}
-/* Modales informativos */
-.ovl{position:fixed;inset:0;z-index:60;background:color-mix(in srgb, var(--ink) 45%, transparent);
-     display:flex;align-items:flex-end;justify-content:center}
-.mdl{background:var(--surface);border:1px solid var(--line);border-bottom:0;width:100%;max-width:540px;
-     border-radius:20px 20px 0 0;box-shadow:var(--shadow);max-height:84vh;overflow-y:auto}
-@media (min-width:640px){
-  .ovl{align-items:center;padding:24px}
-  .mdl{border-radius:18px;border-bottom:1px solid var(--line)}
-}
-.icobtn{width:32px;height:32px;flex-shrink:0;border-radius:50%;border:1px solid var(--line);
-        background:var(--surface);color:var(--muted);display:grid;place-items:center;
-        font-family:'DM Mono',monospace;font-size:12px;line-height:1}
-.icobtn:hover{color:var(--ink);border-color:var(--ink-2)}
 </style>
 </helmet>
 
@@ -140,13 +127,9 @@ textarea{resize:vertical}
           <section style="background:var(--surface);border:1px solid var(--line);border-radius:16px;box-shadow:var(--shadow);overflow:hidden">
             <div style="height:4px;background:var(--kind)"></div>
             <div style="padding:15px 16px 16px;display:flex;flex-direction:column;gap:9px">
-              <div style="display:flex;align-items:center;gap:7px">
+              <div style="display:flex;align-items:center;gap:7px;flex-wrap:wrap">
                 <span style="font-family:'DM Mono',monospace;font-size:9.5px;font-weight:500;letter-spacing:.14em;text-transform:uppercase;padding:4px 8px;border-radius:6px;background:{{ badgeBg }};color:{{ badgeFg }}">{{ badgeLabel }}</span>
-                <span style="flex:1 1 auto;min-width:0;font-family:'DM Mono',monospace;font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);overflow:hidden;text-overflow:ellipsis;white-space:nowrap">{{ dayDateLabel }}</span>
-                <sc-if value="{{ isDouble }}" hint-placeholder-val="{{ true }}">
-                  <button type="button" class="icobtn" onClick="{{ openDouble }}" title="Reglas de la jornada doble" aria-label="Reglas de la jornada doble" style="border-color:var(--kind);color:var(--kind)">!</button>
-                </sc-if>
-                <button type="button" class="icobtn" onClick="{{ openRir }}" title="Cómo leer la rutina" aria-label="Cómo leer la rutina">i</button>
+                <span style="font-family:'DM Mono',monospace;font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)">{{ dayDateLabel }}</span>
               </div>
 
               <div style="display:flex;flex-direction:column;gap:6px">
@@ -365,35 +348,6 @@ textarea{resize:vertical}
 
   </main>
 
-  <sc-if value="{{ modalOpen }}" hint-placeholder-val="{{ false }}">
-    <div class="ovl" onClick="{{ closeModal }}" role="dialog" aria-modal="true" aria-label="{{ modalTitle }}">
-      <div class="mdl" onClick="{{ stopClose }}">
-        <div style="position:sticky;top:0;z-index:1;background:var(--surface);border-bottom:1px solid var(--line);padding:14px 16px;display:flex;align-items:center;gap:12px">
-          <h2 style="margin:0;flex:1 1 auto;font-family:'Bricolage Grotesque',sans-serif;font-weight:700;font-size:16px;letter-spacing:-.02em">{{ modalTitle }}</h2>
-          <button type="button" onClick="{{ closeModal }}" aria-label="Cerrar" style="width:34px;height:34px;flex-shrink:0;border-radius:50%;border:1px solid var(--line);background:var(--surface);color:var(--ink-2);display:grid;place-items:center;font-size:15px;line-height:1">✕</button>
-        </div>
-
-        <sc-if value="{{ modalIsDouble }}" hint-placeholder-val="{{ true }}">
-          <ol style="margin:0;padding:15px 18px 22px 34px;display:flex;flex-direction:column;gap:11px;font-size:13.5px;color:var(--ink-2)">
-            <sc-for list="{{ doubleRules }}" as="r" hint-placeholder-count="3">
-              <li><b style="color:var(--ink)">{{ r.lead }}</b>{{ r.rest }}</li>
-            </sc-for>
-          </ol>
-        </sc-if>
-
-        <sc-if value="{{ modalIsRir }}" hint-placeholder-val="{{ false }}">
-          <dl style="margin:0;padding:15px 18px 22px;display:flex;flex-direction:column;gap:13px">
-            <sc-for list="{{ legend }}" as="l" hint-placeholder-count="4">
-              <div>
-                <dt style="font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.13em;text-transform:uppercase;color:var(--muted)">{{ l.term }}</dt>
-                <dd style="margin:3px 0 0;font-size:13.5px;color:var(--ink-2)">{{ l.desc }}</dd>
-              </div>
-            </sc-for>
-          </dl>
-        </sc-if>
-      </div>
-    </div>
-  </sc-if>
 </div>
 </x-dc>
 <script type="text/x-dc" data-dc-script data-props="{&quot;defaultTheme&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;light&quot;,&quot;dark&quot;],&quot;default&quot;:&quot;light&quot;,&quot;tsType&quot;:&quot;'light' | 'dark'&quot;,&quot;section&quot;:&quot;Preferencias&quot;},&quot;unit&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;kg&quot;,&quot;lb&quot;],&quot;default&quot;:&quot;kg&quot;,&quot;tsType&quot;:&quot;'kg' | 'lb'&quot;,&quot;section&quot;:&quot;Preferencias&quot;},&quot;weightStep&quot;:{&quot;editor&quot;:&quot;range&quot;,&quot;default&quot;:2.5,&quot;min&quot;:0.5,&quot;max&quot;:10,&quot;step&quot;:0.5,&quot;unit&quot;:&quot;kg&quot;,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;Preferencias&quot;}}">
@@ -505,8 +459,7 @@ DAYS.forEach(d => { BY_KEY[d.key] = d; });
 const LETTER = {lun:'L',mar:'M',mie:'X',jue:'J',vie:'V',sab:'S',dom:'D'};
 const KINDVAR = {torso:'var(--clay)',pierna:'var(--ochre)',run:'var(--sage)',rest:'var(--taupe)'};
 const KINDLBL = {torso:'Fuerza · torso',pierna:'Fuerza · pierna',run:'Running',rest:'Descanso'};
-/* Los textos informativos viven aquí una sola vez: los pintan tanto los
-   modales de la card como el acordeón del final. */
+/* Textos informativos del acordeón del día. */
 const DOUBLE_RULES = [
   { lead: 'Separa las sesiones al menos 6 h.', rest: ' Si corres a las 8:00, pesas a partir de las 14:00. Así las señales de resistencia (AMPK) no apagan las de crecimiento (mTOR).' },
   { lead: 'Si no puedes separarlas, pesas primero', rest: ', descansa 10-15 min y sal a correr. Al revés llegas al gimnasio con el sistema nervioso fatigado y tus marcas caen.' },
@@ -537,7 +490,7 @@ class Component extends DCLogic {
     this.state = {
       log, todayIso, todayKey, current: todayKey, view: 'day',
       openEx: null, activeSet: null, awake: false,
-      modal: null, leadOpen: false, frames: {}, theme: null
+      leadOpen: false, frames: {}, theme: null
     };
   }
 
@@ -547,11 +500,9 @@ class Component extends DCLogic {
     try { const s = localStorage.getItem('entreno-theme'); if (s === 'light' || s === 'dark') t = s; } catch (e) {}
     document.documentElement.dataset.theme = t;
     this.setState({ theme: t });
-    this._onKey = (e) => { if (e.key === 'Escape' && this.state.modal) this.setState({ modal: null }); };
-    document.addEventListener('keydown', this._onKey);
   }
 
-  componentWillUnmount() { this.releaseWake(); if (this._onKey) document.removeEventListener('keydown', this._onKey); }
+  componentWillUnmount() { this.releaseWake(); }
 
   save(log) {
     this.setState({ log });
@@ -809,14 +760,6 @@ class Component extends DCLogic {
       leadOpen: st.leadOpen, leadCaret: st.leadOpen ? '▲' : '▼',
       toggleLead: () => this.setState({ leadOpen: !st.leadOpen }),
 
-      modalOpen: !!st.modal,
-      modalIsDouble: st.modal === 'double',
-      modalIsRir: st.modal === 'rir',
-      modalTitle: st.modal === 'double' ? 'Reglas de la jornada doble' : 'Cómo leer la rutina',
-      openDouble: (e) => { if (e && e.stopPropagation) e.stopPropagation(); this.setState({ modal: 'double' }); },
-      openRir: (e) => { if (e && e.stopPropagation) e.stopPropagation(); this.setState({ modal: 'rir' }); },
-      closeModal: () => this.setState({ modal: null }),
-      stopClose: (e) => { if (e && e.stopPropagation) e.stopPropagation(); },
 
       hasSets: counts.total > 0,
       setsLabel: day.ex.length + (day.ex.length === 1 ? ' ejercicio · ' : ' ejercicios · ') + counts.total + ' series',
