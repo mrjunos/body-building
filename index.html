@@ -67,7 +67,6 @@ textarea{resize:vertical}
         background:var(--surface);color:var(--muted);display:grid;place-items:center;
         font-family:'DM Mono',monospace;font-size:12px;line-height:1}
 .icobtn:hover{color:var(--ink);border-color:var(--ink-2)}
-.daytap{cursor:pointer;display:flex;flex-direction:column;gap:7px;border-radius:10px}
 </style>
 </helmet>
 
@@ -152,26 +151,17 @@ textarea{resize:vertical}
                 <button type="button" class="icobtn" onClick="{{ openRir }}" title="Cómo leer la rutina" aria-label="Cómo leer la rutina">i</button>
               </div>
 
-              <div class="daytap" role="button" tabindex="0" aria-expanded="{{ leadOpen }}" onClick="{{ toggleLead }}" onKeyDown="{{ leadKey }}">
-                <div style="display:flex;align-items:flex-start;gap:10px">
-                  <div style="flex:1 1 auto;min-width:0;display:flex;flex-direction:column;gap:5px">
-                    <h1 style="margin:0;font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:clamp(30px,7vw,40px);line-height:1;letter-spacing:-.035em;text-wrap:balance">{{ dayTitle }}</h1>
-                    <p style="margin:0;font-size:14px;color:var(--kind);font-weight:600">{{ dayFocus }}</p>
-                  </div>
-                  <span style="flex-shrink:0;margin-top:7px;color:var(--muted);font-size:11px">{{ leadCaret }}</span>
+              <div style="display:flex;flex-direction:column;gap:6px">
+                <h1 style="margin:0;font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:clamp(30px,7vw,40px);line-height:1;letter-spacing:-.035em;text-wrap:balance">{{ dayTitle }}</h1>
+                <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
+                  <p style="margin:0;font-size:14px;color:var(--kind);font-weight:600">{{ dayFocus }}</p>
+                  <sc-if value="{{ mixesRun }}" hint-placeholder-val="{{ true }}">
+                    <span title="{{ runLabel }}" style="display:inline-flex;align-items:center;gap:6px;padding:3px 9px;border-radius:999px;background:color-mix(in srgb, var(--sage) 15%, transparent);flex-shrink:0">
+                      <span style="width:6px;height:6px;border-radius:50%;background:var(--sage)"></span>
+                      <span style="font-family:'DM Mono',monospace;font-size:9.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--sage)">+ Running</span>
+                    </span>
+                  </sc-if>
                 </div>
-
-                <sc-if value="{{ mixesRun }}" hint-placeholder-val="{{ true }}">
-                  <div style="display:flex;align-items:center;gap:8px;padding:6px 9px;border-radius:9px;background:color-mix(in srgb, var(--sage) 14%, transparent)">
-                    <span style="width:7px;height:7px;border-radius:50%;background:var(--sage);flex-shrink:0"></span>
-                    <span style="font-family:'DM Mono',monospace;font-size:9.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--sage);flex-shrink:0">+ Running</span>
-                    <span style="font-size:12.5px;color:var(--ink-2);min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">{{ runLabel }}</span>
-                  </div>
-                </sc-if>
-
-                <sc-if value="{{ leadOpen }}" hint-placeholder-val="{{ false }}">
-                  <p style="margin:0;font-size:13.5px;color:var(--ink-2);text-wrap:pretty">{{ dayLead }}</p>
-                </sc-if>
               </div>
 
               <sc-if value="{{ hasSets }}" hint-placeholder-val="{{ true }}">
@@ -337,7 +327,18 @@ textarea{resize:vertical}
       </div>
     </sc-if>
 
-    <p style="margin:26px 0 0;font-size:11.5px;color:var(--muted);text-align:center;line-height:1.6">Selección de ejercicios según Neco y Andoni — <em>El mejor ejercicio para cada músculo</em>.<br />Fotografías: <a href="https://github.com/yuhonas/free-exercise-db">free-exercise-db</a>, licencia Unlicense.<br />Animaciones © <a href="https://gymvisual.com/">Gym visual</a>, enlazadas desde <a href="https://github.com/hasaneyldrm/exercises-dataset">exercises-dataset</a>.</p>
+    <section style="margin:26px 0 0;background:var(--surface);border:1px solid var(--line);border-radius:14px;overflow:hidden">
+      <button type="button" onClick="{{ toggleLead }}" aria-expanded="{{ leadOpen }}" style="width:100%;appearance:none;background:none;border:0;padding:14px 15px;display:flex;align-items:center;gap:10px;text-align:left">
+        <span style="width:22px;height:22px;flex-shrink:0;border-radius:50%;border:1.5px solid var(--muted);color:var(--muted);display:grid;place-items:center;font-family:'DM Mono',monospace;font-size:12px">i</span>
+        <span style="flex:1 1 auto;font-family:'DM Mono',monospace;font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-2)">Cómo enfocar {{ dayArticle }}</span>
+        <span style="color:var(--muted);font-size:13px">{{ leadCaret }}</span>
+      </button>
+      <sc-if value="{{ leadOpen }}" hint-placeholder-val="{{ false }}">
+        <p style="margin:0;padding:0 16px 16px;font-size:13.5px;color:var(--ink-2);text-wrap:pretty;max-width:62ch">{{ dayLead }}</p>
+      </sc-if>
+    </section>
+
+    <p style="margin:22px 0 0;font-size:11.5px;color:var(--muted);text-align:center;line-height:1.6">Selección de ejercicios según Neco y Andoni — <em>El mejor ejercicio para cada músculo</em>.<br />Fotografías: <a href="https://github.com/yuhonas/free-exercise-db">free-exercise-db</a>, licencia Unlicense.<br />Animaciones © <a href="https://gymvisual.com/">Gym visual</a>, enlazadas desde <a href="https://github.com/hasaneyldrm/exercises-dataset">exercises-dataset</a>.</p>
 
   </main>
 
@@ -770,17 +771,15 @@ class Component extends DCLogic {
       badgeLabel: isToday ? 'Hoy' : day.name,
       badgeBg: isToday ? kindColor : 'color-mix(in srgb, ' + kindColor + ' 13%, transparent)',
       badgeFg: isToday ? 'var(--on-kind)' : kindColor,
-      dayDateLabel: KINDLBL[day.kind] + (mixesRun ? ' + running' : '') + ' · ' + shortDate(iso),
+      dayDateLabel: KINDLBL[day.kind] + ' · ' + shortDate(iso),
       dayTitle: day.title, dayFocus: day.focus, dayLead: day.lead,
       isRest: day.ex.length === 0,
       isDouble: !!day.double,
 
       mixesRun, runLabel,
+      dayArticle: 'el ' + day.name.toLowerCase(),
       leadOpen: st.leadOpen, leadCaret: st.leadOpen ? '▲' : '▼',
       toggleLead: () => this.setState({ leadOpen: !st.leadOpen }),
-      leadKey: (e) => {
-        if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); this.setState({ leadOpen: !st.leadOpen }); }
-      },
 
       modalOpen: !!st.modal,
       modalIsDouble: st.modal === 'double',
