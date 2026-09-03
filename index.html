@@ -101,14 +101,22 @@ textarea{resize:vertical}
           <sc-for list="{{ weekCards }}" as="w" hint-placeholder-count="7">
             <button type="button" onClick="{{ w.select }}" style="text-align:left;appearance:none;padding:0;overflow:hidden;border:1px solid {{ w.border }};border-radius:14px;background:var(--surface);box-shadow:var(--shadow);display:flex;flex-direction:column">
               <span style="height:4px;background:{{ w.color }};display:block"></span>
-              <span style="padding:13px 14px 14px;display:flex;flex-direction:column;gap:7px">
+              <span style="padding:13px 14px 14px;display:flex;flex-direction:column;gap:7px;flex:1 1 auto">
                 <span style="display:flex;align-items:baseline;justify-content:space-between;gap:8px">
                   <span style="font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:{{ w.color }}">{{ w.name }}</span>
                   <span style="font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.08em;color:var(--muted)">{{ w.dateLabel }}</span>
                 </span>
                 <span style="font-family:'Bricolage Grotesque',sans-serif;font-weight:700;font-size:20px;letter-spacing:-.02em;line-height:1.1">{{ w.title }}</span>
-                <span style="font-size:13px;color:var(--ink-2)">{{ w.focus }}</span>
-                <span style="display:flex;align-items:center;gap:9px;margin-top:3px">
+                <span style="display:flex;align-items:center;gap:7px;flex-wrap:wrap">
+                  <span style="font-size:13px;color:var(--ink-2)">{{ w.focus }}</span>
+                  <sc-if value="{{ w.mixesRun }}" hint-placeholder-val="{{ false }}">
+                    <span title="{{ w.runLabel }}" style="display:inline-flex;align-items:center;gap:5px;padding:2px 8px;border-radius:999px;background:color-mix(in srgb, var(--sage) 15%, transparent);flex-shrink:0">
+                      <span style="width:5px;height:5px;border-radius:50%;background:var(--sage)"></span>
+                      <span style="font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--sage)">+ Running</span>
+                    </span>
+                  </sc-if>
+                </span>
+                <span style="display:flex;align-items:center;gap:9px;margin-top:auto;padding-top:3px">
                   <span style="flex:1 1 auto;height:5px;border-radius:3px;background:var(--surface-2);overflow:hidden;display:block">
                     <span style="display:block;height:100%;width:{{ w.pct }};background:{{ w.color }}"></span>
                   </span>
@@ -724,11 +732,15 @@ class Component extends DCLogic {
 
     const counts = countDay(day, iso);
     const isToday = st.current === st.todayKey;
-    /* Un día mixto combina pesas y carrera: hay que anunciarlo en la card,
-       porque el título sólo nombra la sesión de fuerza. */
-    const runEx = day.ex.find(e => e.run);
-    const mixesRun = !!runEx && day.ex.some(e => !e.run);
-    const runLabel = runEx ? runEx.n : '';
+    /* Un día mixto combina pesas y carrera: hay que anunciarlo, porque el
+       título sólo nombra la sesión de fuerza. */
+    const runInfo = (d) => {
+      const r = d.ex.find(e => e.run);
+      return { mixes: !!r && d.ex.some(e => !e.run), label: r ? r.n : '' };
+    };
+    const dayRun = runInfo(day);
+    const mixesRun = dayRun.mixes;
+    const runLabel = dayRun.label;
     const notes = (st.log[iso] && st.log[iso].notes) || '';
 
     const mondayOffset = (new Date().getDay() === 0 ? 6 : new Date().getDay() - 1);
@@ -785,8 +797,10 @@ class Component extends DCLogic {
       weekCards: DAYS.map(d => {
         const dIso = this.dateForKey(d.key);
         const c = countDay(d, dIso);
+        const r = runInfo(d);
         return {
           name: d.name, title: d.title, focus: d.focus,
+          mixesRun: r.mixes, runLabel: r.label,
           color: KINDVAR[d.kind],
           border: d.key === st.todayKey ? 'var(--ink-2)' : 'var(--line)',
           dateLabel: shortDate(dIso),
