@@ -22,6 +22,7 @@ Todo se guarda en el navegador del móvil (`localStorage`); no hay servidor ni c
 | `index.html` | La app que sirve GitHub Pages. Generada, no la edites a mano. |
 | `Entreno.dc.html` | **La fuente.** Diseño y lógica, editable en Claude Design. |
 | `fotos/` | Las 76 fotos de ejercicios a 560 px. |
+| `generador/gifs.json` | Qué animación de Gym visual corresponde a cada ejercicio. |
 | `vendor/` | React, ReactDOM y el runtime `support.js`, servidos desde el repo. |
 | `generador/build_dc.py` | Convierte `Entreno.dc.html` en `index.html`. |
 | `generador/routine.py` | Datos de la rutina: días, ejercicios, series, reps, RIR y notas. |
@@ -60,7 +61,15 @@ Selección de ejercicios según Neco (doctor en Ciencias del Deporte) y Andoni,
 en *El mejor ejercicio para cada músculo*.
 
 Fotografías de [free-exercise-db](https://github.com/yuhonas/free-exercise-db),
-publicado bajo licencia Unlicense (dominio público).
+publicado bajo licencia Unlicense (dominio público). Están en `fotos/`.
+
+Las animaciones son **© [Gym visual](https://gymvisual.com/)** y **no se copian a
+este repositorio**: se enlazan desde
+[hasaneyldrm/exercises-dataset](https://github.com/hasaneyldrm/exercises-dataset)
+a través del CDN de jsDelivr, conservando la atribución exigida, que aparece en
+el pie de la app. Su reutilización se rige por los
+[términos de Gym visual](https://gymvisual.com/content/3-terms-and-conditions-of-use).
+Los tres días de running no tienen animación y usan la secuencia de fotos.
 
 React 18.3.1 (MIT), servido desde `vendor/`; los hashes SRI coinciden con los
 que espera `support.js`.

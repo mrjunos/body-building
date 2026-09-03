@@ -210,10 +210,15 @@ textarea{resize:vertical}
             <article style="background:var(--surface);border:1px solid {{ ex.cardBorder }};border-radius:16px;box-shadow:var(--shadow);overflow:hidden">
 
               <div style="padding:12px 13px;display:flex;gap:12px;align-items:flex-start">
-                <span class="mv" style="width:54px;height:54px;flex-shrink:0;border-radius:10px;background:var(--surface-2);border:1px solid var(--line)">
-                  <img src="{{ ex.photoStart }}" alt="" loading="lazy" />
-                  <img class="f2" src="{{ ex.photoEnd }}" alt="" loading="lazy" />
-                </span>
+                <sc-if value="{{ ex.hasGif }}" hint-placeholder-val="{{ true }}">
+                  <img src="{{ ex.gifSrc }}" alt="" style="width:54px;height:54px;flex-shrink:0;border-radius:10px;object-fit:cover;background:var(--surface-2);border:1px solid var(--line);display:block" />
+                </sc-if>
+                <sc-if value="{{ ex.noGif }}" hint-placeholder-val="{{ false }}">
+                  <span class="mv" style="width:54px;height:54px;flex-shrink:0;border-radius:10px;background:var(--surface-2);border:1px solid var(--line)">
+                    <img src="{{ ex.photoStart }}" alt="" />
+                    <img class="f2" src="{{ ex.photoEnd }}" alt="" />
+                  </span>
+                </sc-if>
                 <div style="flex:1 1 auto;min-width:0;display:flex;flex-direction:column;gap:2px">
                   <span style="font-family:'DM Mono',monospace;font-size:9.5px;font-weight:500;letter-spacing:.14em;text-transform:uppercase;color:var(--kind)">{{ ex.group }}</span>
                   <h2 style="margin:0;font-family:'Bricolage Grotesque',sans-serif;font-weight:700;font-size:17px;letter-spacing:-.02em;line-height:1.18;text-wrap:pretty">{{ ex.name }}</h2>
@@ -238,14 +243,17 @@ textarea{resize:vertical}
                 <div style="margin:0 13px 12px;padding:13px;background:var(--surface-2);border:1px solid var(--line);border-radius:12px;display:flex;flex-direction:column;gap:13px">
                   <figure style="margin:0;display:flex;flex-direction:column;gap:6px">
                     <button type="button" onClick="{{ ex.cycleFrame }}" title="Tocar para ver inicio y final" style="appearance:none;padding:0;margin:0;width:100%;aspect-ratio:4/3;border:1px solid var(--line);border-radius:10px;overflow:hidden;background:var(--surface);display:block">
-                      <sc-if value="{{ ex.frameAnim }}" hint-placeholder-val="{{ true }}">
+                      <sc-if value="{{ ex.frameGif }}" hint-placeholder-val="{{ true }}">
+                        <img src="{{ ex.gifSrc }}" alt="{{ ex.name }}" style="display:block;width:100%;height:100%;object-fit:contain;background:var(--surface-2)" />
+                      </sc-if>
+                      <sc-if value="{{ ex.frameAnim }}" hint-placeholder-val="{{ false }}">
                         <span class="mv" style="width:100%;height:100%">
-                          <img src="{{ ex.photoStart }}" alt="{{ ex.name }}" loading="lazy" />
-                          <img class="f2" src="{{ ex.photoEnd }}" alt="" loading="lazy" />
+                          <img src="{{ ex.photoStart }}" alt="{{ ex.name }}" />
+                          <img class="f2" src="{{ ex.photoEnd }}" alt="" />
                         </span>
                       </sc-if>
                       <sc-if value="{{ ex.frameStill }}" hint-placeholder-val="{{ false }}">
-                        <img src="{{ ex.stillSrc }}" alt="{{ ex.stillAlt }}" loading="lazy" style="display:block;width:100%;height:100%;object-fit:cover" />
+                        <img src="{{ ex.stillSrc }}" alt="{{ ex.stillAlt }}" style="display:block;width:100%;height:100%;object-fit:cover" />
                       </sc-if>
                     </button>
                     <figcaption style="font-family:'DM Mono',monospace;font-size:9.5px;letter-spacing:.13em;text-transform:uppercase;color:var(--muted)">{{ ex.frameLabel }}</figcaption>
@@ -259,7 +267,7 @@ textarea{resize:vertical}
                       <div style="display:flex;gap:9px;overflow-x:auto;padding-bottom:4px">
                         <sc-for list="{{ ex.alts }}" as="a" hint-placeholder-count="3">
                           <figure style="margin:0;flex:0 0 128px;display:flex;flex-direction:column;gap:5px">
-                            <img src="{{ a.src }}" alt="{{ a.name }}" loading="lazy" style="width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:8px;border:1px solid var(--line);background:var(--surface)" />
+                            <img src="{{ a.src }}" alt="{{ a.name }}" style="width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:8px;border:1px solid var(--line);background:var(--surface)" />
                             <figcaption style="font-size:12px;line-height:1.25;color:var(--ink-2)">{{ a.name }}</figcaption>
                           </figure>
                         </sc-for>
@@ -327,7 +335,7 @@ textarea{resize:vertical}
       </div>
     </sc-if>
 
-    <p style="margin:26px 0 0;font-size:11.5px;color:var(--muted);text-align:center;line-height:1.6">Selección de ejercicios según Neco y Andoni — <em>El mejor ejercicio para cada músculo</em>.<br />Fotografías: <a href="https://github.com/yuhonas/free-exercise-db">free-exercise-db</a>, licencia Unlicense.</p>
+    <p style="margin:26px 0 0;font-size:11.5px;color:var(--muted);text-align:center;line-height:1.6">Selección de ejercicios según Neco y Andoni — <em>El mejor ejercicio para cada músculo</em>.<br />Fotografías: <a href="https://github.com/yuhonas/free-exercise-db">free-exercise-db</a>, licencia Unlicense.<br />Animaciones © <a href="https://gymvisual.com/">Gym visual</a>, enlazadas desde <a href="https://github.com/hasaneyldrm/exercises-dataset">exercises-dataset</a>.</p>
 
   </main>
 
@@ -374,6 +382,12 @@ textarea{resize:vertical}
 </x-dc>
 <script type="text/x-dc" data-dc-script data-props="{&quot;defaultTheme&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;light&quot;,&quot;dark&quot;],&quot;default&quot;:&quot;light&quot;,&quot;tsType&quot;:&quot;'light' | 'dark'&quot;,&quot;section&quot;:&quot;Preferencias&quot;},&quot;unit&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;kg&quot;,&quot;lb&quot;],&quot;default&quot;:&quot;kg&quot;,&quot;tsType&quot;:&quot;'kg' | 'lb'&quot;,&quot;section&quot;:&quot;Preferencias&quot;},&quot;weightStep&quot;:{&quot;editor&quot;:&quot;range&quot;,&quot;default&quot;:2.5,&quot;min&quot;:0.5,&quot;max&quot;:10,&quot;step&quot;:0.5,&quot;unit&quot;:&quot;kg&quot;,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;Preferencias&quot;}}">
 const IMGBASE = './fotos/';
+/* Animaciones © Gym visual (https://gymvisual.com/), enlazadas —no copiadas— desde
+   hasaneyldrm/exercises-dataset a través del CDN de jsDelivr. La atribución debe
+   permanecer visible; ver el pie de página. */
+const GIFBASE = 'https://cdn.jsdelivr.net/gh/hasaneyldrm/exercises-dataset@main/videos/';
+const GIFS = {bulgara:'0410-qx4fgX7.gif',curl_bayesian:'0190-YTur5nR.gif',curl_femoral_sentado:'0599-Zg3XY7P.gif',curl_muneca:'1412-SJAA2IQ.gif',curl_predicador:'0372-jivWf8n.gif',elevaciones_laterales:'0334-DsgkuIt.gif',ext_triceps_polea:'0200-dU605di.gif',extension_rodilla:'0585-my33uHU.gif',gemelos_de_pie:'0605-ykUOVze.gif',hip_thrust:'3562-qg2PGl6.gif',jalon_pecho:'0198-RVwzP10.gif',jalon_unilateral:'3563-U5INZY6.gif',katana:'0194-2IxROQ1.gif',peso_muerto_rumano:'0085-wQ2c4XD.gif',prensa:'0739-10Z2DXU.gif',press_inclinado:'0314-ns0SIbU.gif',press_plano:'0289-SpYC0Kp.gif',remo_pecho_apoyado:'1349-BgljGjd.gif',rueda_abdominal:'0857-NAgVB3t.gif'};
+const gifFor = (k) => (GIFS[k] ? GIFBASE + GIFS[k] : null);
 const NAMES = {"Incline_Dumbbell_Press":"Press inclinado con mancuernas","Smith_Machine_Incline_Bench_Press":"Press inclinado en multipower","Leverage_Incline_Chest_Press":"Press inclinado en máquina","Lying_T-Bar_Row":"Remo T tumbado (apoyo en pecho)","Leverage_Iso_Row":"Remo en máquina iso-lateral","Seated_Cable_Rows":"Remo sentado en polea","Side_Lateral_Raise":"Elevación lateral con mancuernas","Cable_Seated_Lateral_Raise":"Elevación lateral en polea","Seated_Side_Lateral_Raise":"Elevación lateral sentado","One_Arm_Dumbbell_Preacher_Curl":"Curl predicador unilateral","Machine_Preacher_Curls":"Curl predicador en máquina","Cable_Preacher_Curl":"Curl predicador en polea","Triceps_Pushdown_-_Rope_Attachment":"Extensión en polea con cuerda","Triceps_Pushdown":"Extensión en polea con barra","Triceps_Pushdown_-_V-Bar_Attachment":"Extensión en polea con barra V","Leg_Press":"Prensa de piernas","Narrow_Stance_Leg_Press":"Prensa con pies juntos","Split_Squat_with_Dumbbells":"Búlgara con mancuernas","Smith_Single-Leg_Split_Squat":"Búlgara en multipower","Suspended_Split_Squat":"Búlgara en TRX","Seated_Leg_Curl":"Curl femoral sentado","Lying_Leg_Curls":"Curl femoral tumbado","Standing_Calf_Raises":"Talones de pie en máquina","Standing_Dumbbell_Calf_Raise":"Talones de pie con mancuerna","Smith_Machine_Calf_Raise":"Talones de pie en multipower","Ab_Roller":"Rueda abdominal","Barbell_Ab_Rollout_-_On_Knees":"Rollout con barra, de rodillas","Wide-Grip_Lat_Pulldown":"Jalón al pecho, agarre ancho","Close-Grip_Front_Lat_Pulldown":"Jalón al pecho, agarre cerrado","Pullups":"Dominadas","Dumbbell_Bench_Press":"Press plano con mancuernas","Leverage_Chest_Press":"Press plano en máquina","Machine_Bench_Press":"Press en máquina, sentado","One_Arm_Lat_Pulldown":"Jalón unilateral en polea","Straight-Arm_Pulldown":"Pullover en polea, brazo recto","Standing_One-Arm_Cable_Curl":"Curl unilateral en polea","High_Cable_Curls":"Curl en polea alta","Overhead_Cable_Curl":"Curl sobre la cabeza en polea","Cable_Rope_Overhead_Triceps_Extension":"Extensión sobre la cabeza con cuerda","Triceps_Overhead_Extension_with_Rope":"Katana con cuerda, de pie","Standing_Overhead_Barbell_Triceps_Extension":"Extensión sobre la cabeza con barra","Romanian_Deadlift":"Peso muerto rumano con barra","Stiff-Legged_Dumbbell_Deadlift":"Piernas rígidas con mancuernas","Smith_Machine_Stiff-Legged_Deadlift":"Rumano en multipower","Leg_Extensions":"Extensión de rodilla en máquina","Single-Leg_Leg_Extension":"Extensión de rodilla unilateral","Barbell_Hip_Thrust":"Hip thrust con barra","Smith_Machine_Hip_Raise":"Hip thrust en multipower","Seated_Palm-Up_Barbell_Wrist_Curl":"Curl de muñeca sentado con barra","Seated_Dumbbell_Palms-Up_Wrist_Curl":"Curl de muñeca con mancuerna","Seated_Two-Arm_Palms-Up_Low-Pulley_Wrist_Curl":"Curl de muñeca en polea baja","Jogging_Treadmill":"Trote continuo","Trail_Running_Walking":"Carrera en exterior","Running_Treadmill":"Carrera en cinta","Wind_Sprints":"Series / sprints"};
 const MAP = {
   press_inclinado:{p:'Incline_Dumbbell_Press',a:['Smith_Machine_Incline_Bench_Press','Leverage_Incline_Chest_Press']},
@@ -628,6 +642,7 @@ class Component extends DCLogic {
     const exercises = day.ex.map((e, i) => {
       const m = MAP[e.k];
       const fr = st.frames[i] || 0;
+      const gif = gifFor(e.k);
       const sets = this.setsFor(day, e, iso);
       const open = st.openEx === i;
       const prev = this.sessionsFor(e.k, iso)[0];
@@ -650,11 +665,12 @@ class Component extends DCLogic {
         id: e.k + '-' + i, group: e.g, name: e.n, alt: e.alt, cue: e.cue, rir: e.rir,
         target: e.run ? e.r : e.s + ' × ' + e.r,
         thumb: shot(m.p, 0), photoStart: shot(m.p, 0), photoEnd: shot(m.p, 1),
-        frameAnim: fr === 0, frameStill: fr !== 0,
+        hasGif: !!gif, noGif: !gif, frameGif: fr === 0 && !!gif, gifSrc: gif || '',
+        frameAnim: fr === 0 && !gif, frameStill: fr !== 0,
         stillSrc: shot(m.p, fr === 2 ? 1 : 0),
         stillAlt: fr === 2 ? 'Posición final' : 'Posición inicial',
-        frameLabel: fr === 0 ? 'Secuencia · toca para ver los extremos'
-                  : (fr === 1 ? 'Inicio · toca para el final' : 'Final · toca para la secuencia'),
+        frameLabel: fr === 0 ? (gif ? 'Animación · toca para ver las fotos' : 'Secuencia · toca para ver los extremos')
+                  : (fr === 1 ? 'Inicio · toca para el final' : (gif ? 'Final · toca para la animación' : 'Final · toca para la secuencia')),
         cycleFrame: () => {
           const f = Object.assign({}, st.frames); f[i] = (fr + 1) % 3;
           this.setState({ frames: f });

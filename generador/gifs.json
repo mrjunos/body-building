@@ -1,0 +1,78 @@
+{
+ "press_inclinado": {
+  "file": "0314-ns0SIbU.gif",
+  "name": "dumbbell incline bench press"
+ },
+ "remo_pecho_apoyado": {
+  "file": "1349-BgljGjd.gif",
+  "name": "lever reverse t-bar row"
+ },
+ "elevaciones_laterales": {
+  "file": "0334-DsgkuIt.gif",
+  "name": "dumbbell lateral raise"
+ },
+ "curl_predicador": {
+  "file": "0372-jivWf8n.gif",
+  "name": "dumbbell preacher curl"
+ },
+ "ext_triceps_polea": {
+  "file": "0200-dU605di.gif",
+  "name": "cable pushdown (with rope attachment)"
+ },
+ "prensa": {
+  "file": "0739-10Z2DXU.gif",
+  "name": "sled 45в° leg press"
+ },
+ "bulgara": {
+  "file": "0410-qx4fgX7.gif",
+  "name": "dumbbell single leg split squat"
+ },
+ "curl_femoral_sentado": {
+  "file": "0599-Zg3XY7P.gif",
+  "name": "lever seated leg curl"
+ },
+ "gemelos_de_pie": {
+  "file": "0605-ykUOVze.gif",
+  "name": "lever standing calf raise"
+ },
+ "rueda_abdominal": {
+  "file": "0857-NAgVB3t.gif",
+  "name": "wheel rollerout"
+ },
+ "jalon_pecho": {
+  "file": "0198-RVwzP10.gif",
+  "name": "cable pulldown"
+ },
+ "press_plano": {
+  "file": "0289-SpYC0Kp.gif",
+  "name": "dumbbell bench press"
+ },
+ "jalon_unilateral": {
+  "file": "3563-U5INZY6.gif",
+  "name": "cable one arm pulldown"
+ },
+ "curl_bayesian": {
+  "file": "0190-YTur5nR.gif",
+  "name": "cable one arm curl"
+ },
+ "katana": {
+  "file": "0194-2IxROQ1.gif",
+  "name": "cable overhead triceps extension (rope attachment)"
+ },
+ "peso_muerto_rumano": {
+  "file": "0085-wQ2c4XD.gif",
+  "name": "barbell romanian deadlift"
+ },
+ "extension_rodilla": {
+  "file": "0585-my33uHU.gif",
+  "name": "lever leg extension"
+ },
+ "hip_thrust": {
+  "file": "3562-qg2PGl6.gif",
+  "name": "barbell glute bridge two legs on bench (male)"
+ },
+ "curl_muneca": {
+  "file": "1412-SJAA2IQ.gif",
+  "name": "barbell palms up wrist curl over a bench"
+ }
+}
