@@ -8,7 +8,7 @@ from routine import DAYS
 def here(*p):
     return os.path.join(HERE, *p)
 
-OUT = sys.argv[1] if len(sys.argv) > 1 else os.path.join(HERE, '..', 'rutina.html')
+OUT = sys.argv[1] if len(sys.argv) > 1 else os.path.join(HERE, '..', 'index.html')
 
 names = json.load(open(here('names.json')))
 mapping = json.load(open(here('mapping.json')))

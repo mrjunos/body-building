@@ -2,6 +2,8 @@
 
 Web para consultar la rutina del día desde el móvil, en el gimnasio.
 
+**En vivo:** https://mrjunos.github.io/body-building/
+
 Abre directamente en el día que toca. Cada ejercicio lleva foto, grupo muscular,
 series y repeticiones con su RIR, y series que se marcan con el dedo. Al tocar
 un ejercicio se despliega la posición de inicio y final, la nota de técnica y
@@ -14,20 +16,20 @@ una vez cargada.
 
 | Ruta | Qué es |
 | --- | --- |
-| `rutina.html` | La web, autocontenida. Ábrela en el navegador. |
+| `index.html` | La web, autocontenida. Ábrela en el navegador. |
 | `propuesta semanal.md` | El plan: 4 días de fuerza torso/pierna + 3 de running. |
 | `ejercicios por mulculo.txt` | Selección de ejercicios y notas de técnica por grupo muscular. |
 | `generador/routine.py` | Los datos de la rutina: días, ejercicios, series, reps, RIR y notas. |
 | `generador/mapping.json` | Qué foto de la base de ejercicios le toca a cada movimiento. |
 | `generador/names.json` | Nombres en español de los ejercicios de la base. |
-| `generador/build.py` | Genera `rutina.html`. |
+| `generador/build.py` | Genera `index.html`. |
 | `generador/fetch.sh` | Descarga el dataset y las fotos (macOS: usa `sips`). |
 
 ## Regenerar la web
 
 ```sh
 bash generador/fetch.sh      # solo la primera vez: descarga dataset y fotos
-python3 generador/build.py   # escribe rutina.html
+python3 generador/build.py   # escribe index.html
 ```
 
 Para cambiar series, repeticiones, ejercicios o notas, edita `generador/routine.py`
