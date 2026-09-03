@@ -1,0 +1,7 @@
+# Derivados de generador/fetch.sh — se vuelven a descargar, no se versionan
+generador/exercises.json
+generador/raw/
+generador/small/
+.DS_Store
+__pycache__/
+*.pyc

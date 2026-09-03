@@ -1,0 +1,28 @@
+{
+  "press_inclinado":      {"primary":"Incline_Dumbbell_Press", "alts":["Smith_Machine_Incline_Bench_Press","Leverage_Incline_Chest_Press"]},
+  "remo_pecho_apoyado":   {"primary":"Lying_T-Bar_Row", "alts":["Leverage_Iso_Row","Seated_Cable_Rows"]},
+  "elevaciones_laterales":{"primary":"Side_Lateral_Raise", "alts":["Cable_Seated_Lateral_Raise","Seated_Side_Lateral_Raise"]},
+  "curl_predicador":      {"primary":"One_Arm_Dumbbell_Preacher_Curl", "alts":["Machine_Preacher_Curls","Cable_Preacher_Curl"]},
+  "ext_triceps_polea":    {"primary":"Triceps_Pushdown_-_Rope_Attachment", "alts":["Triceps_Pushdown","Triceps_Pushdown_-_V-Bar_Attachment"]},
+
+  "prensa":               {"primary":"Leg_Press", "alts":["Narrow_Stance_Leg_Press"]},
+  "bulgara":              {"primary":"Split_Squat_with_Dumbbells", "alts":["Smith_Single-Leg_Split_Squat","Suspended_Split_Squat"]},
+  "curl_femoral_sentado": {"primary":"Seated_Leg_Curl", "alts":["Lying_Leg_Curls"]},
+  "gemelos_de_pie":       {"primary":"Standing_Calf_Raises", "alts":["Standing_Dumbbell_Calf_Raise","Smith_Machine_Calf_Raise"]},
+  "rueda_abdominal":      {"primary":"Ab_Roller", "alts":["Barbell_Ab_Rollout_-_On_Knees"]},
+
+  "jalon_pecho":          {"primary":"Wide-Grip_Lat_Pulldown", "alts":["Close-Grip_Front_Lat_Pulldown","Pullups"]},
+  "press_plano":          {"primary":"Dumbbell_Bench_Press", "alts":["Leverage_Chest_Press","Machine_Bench_Press"]},
+  "jalon_unilateral":     {"primary":"One_Arm_Lat_Pulldown", "alts":["Straight-Arm_Pulldown"]},
+  "curl_bayesian":        {"primary":"Standing_One-Arm_Cable_Curl", "alts":["High_Cable_Curls","Overhead_Cable_Curl"]},
+  "katana":               {"primary":"Cable_Rope_Overhead_Triceps_Extension", "alts":["Triceps_Overhead_Extension_with_Rope","Standing_Overhead_Barbell_Triceps_Extension"]},
+
+  "peso_muerto_rumano":   {"primary":"Romanian_Deadlift", "alts":["Stiff-Legged_Dumbbell_Deadlift","Smith_Machine_Stiff-Legged_Deadlift"]},
+  "extension_rodilla":    {"primary":"Leg_Extensions", "alts":["Single-Leg_Leg_Extension"]},
+  "hip_thrust":           {"primary":"Barbell_Hip_Thrust", "alts":["Smith_Machine_Hip_Raise"]},
+  "curl_muneca":          {"primary":"Seated_Palm-Up_Barbell_Wrist_Curl", "alts":["Seated_Dumbbell_Palms-Up_Wrist_Curl","Seated_Two-Arm_Palms-Up_Low-Pulley_Wrist_Curl"]},
+
+  "run_z2":               {"primary":"Jogging_Treadmill", "alts":["Trail_Running_Walking"]},
+  "run_hiit":             {"primary":"Running_Treadmill", "alts":["Wind_Sprints"]},
+  "run_larga":            {"primary":"Trail_Running_Walking", "alts":["Jogging_Treadmill"]}
+}
