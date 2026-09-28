@@ -1,4 +1,4 @@
-// Funciones puras portadas verbatim desde Entreno.dc.html: no dependen de React
+// Funciones puras portadas verbatim desde Entreno.dc.html (en el historial de git): no dependen de React
 // ni del almacenamiento, así que sobreviven intactas al cambio a Firestore.
 import { BY_KEY } from '../data/days.js';
 

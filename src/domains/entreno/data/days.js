@@ -1,4 +1,4 @@
-// Rutina, portada verbatim desde Entreno.dc.html.
+// Rutina, portada verbatim desde Entreno.dc.html (en el historial de git).
 // Fuente de los ejercicios: Neco y Andoni, "El mejor ejercicio para cada músculo".
 
 const DAYS = [
