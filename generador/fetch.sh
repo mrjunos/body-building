@@ -4,6 +4,7 @@
 # Requiere macOS (usa `sips`). En Linux, sustituye el bucle por ImageMagick.
 set -euo pipefail
 cd "$(dirname "$0")"
+DATA=../src/domains/entreno/data
 
 REPO="https://raw.githubusercontent.com/yuhonas/free-exercise-db/main"
 
@@ -17,7 +18,7 @@ import json, sys
 base = sys.argv[1] + "/exercises/"
 db = {e['id']: e for e in json.load(open('exercises.json'))}
 want = set()
-for v in json.load(open('mapping.json')).values():
+for v in json.load(open('../src/domains/entreno/data/mapping.json')).values():
     want.update(db[v['primary']]['images'][:2])
     for a in v['alts']:
         if db[a]['images']:
@@ -32,4 +33,4 @@ for f in raw/*; do
   sips -Z 560 -s format jpeg -s formatOptions 62 "$f" --out "small/$(basename "$f")" >/dev/null
 done
 
-echo "✓ Listo. Ahora: python3 generador/build.py"
+echo "✓ Listo. Ahora copia small/<Id>__<n>.jpg a public/fotos/<Id>/<n>.jpg"

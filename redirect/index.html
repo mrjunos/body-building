@@ -1,0 +1,41 @@
+<!doctype html>
+<!--
+  Lo que sirve GitHub Pages (rama gh-pages) desde que la app vive en Firebase
+  Hosting. El historial de la app vieja está en el localStorage de este origen,
+  que la nueva no puede leer: se empaqueta en el fragmento de la URL, que nunca
+  sale del navegador, y la nueva lo recoge en legacyHandoff.js.
+-->
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex" />
+    <title>Entreno se ha mudado</title>
+    <style>
+      html { background: #F7F1EA; color: #231A13; font: 15px/1.5 system-ui, sans-serif; }
+      body { margin: 0; min-height: 100vh; display: grid; place-items: center; padding: 16px; text-align: center; }
+      a { color: #B95E42; }
+    </style>
+    <script>
+      (function () {
+        var target = 'https://entreno-jj.web.app/';
+        try {
+          var raw = localStorage.getItem('entreno-log-v1');
+          var log = raw && JSON.parse(raw);
+          if (log && typeof log === 'object' && Object.keys(log).length) {
+            var bytes = new TextEncoder().encode(JSON.stringify(log));
+            var bin = '';
+            for (var i = 0; i < bytes.length; i++) bin += String.fromCharCode(bytes[i]);
+            target += '#legacy=' + btoa(bin).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
+          }
+        } catch (e) {
+          /* sin historial legible: se redirige igual */
+        }
+        location.replace(target);
+      })();
+    </script>
+  </head>
+  <body>
+    <p>Entreno se ha mudado a <a href="https://entreno-jj.web.app/">entreno-jj.web.app</a>.</p>
+  </body>
+</html>
