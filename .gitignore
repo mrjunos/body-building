@@ -12,3 +12,7 @@ generador/small/
 .DS_Store
 __pycache__/
 *.pyc
+
+# Emuladores de Firebase
+firestore-debug.log
+firebase-debug.log

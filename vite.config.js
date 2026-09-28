@@ -34,6 +34,9 @@ export default defineConfig({
         globPatterns: ['**/*.{js,css,html,ico,png,svg,webmanifest}', 'fotos/**/*.jpg'],
         maximumFileSizeToCacheInBytes: 4 * 1024 * 1024,
         navigateFallback: '/index.html',
+        // /__/ son las rutas reservadas de Firebase Hosting (el handler de
+        // auth, entre otras): tienen que llegar al servidor, no al shell.
+        navigateFallbackDenylist: [/^\/__\//],
         runtimeCaching: [
           {
             // Las animaciones son cross-origin, así que no pueden precachearse.
@@ -66,6 +69,7 @@ export default defineConfig({
       output: {
         manualChunks: {
           'vendor-react': ['react', 'react-dom'],
+          'vendor-firebase': ['firebase/app', 'firebase/auth', 'firebase/firestore'],
         },
       },
     },
@@ -74,6 +78,7 @@ export default defineConfig({
     globals: true,
     environment: 'jsdom',
     setupFiles: './src/setupTests.js',
+    include: ['src/**/*.test.{js,jsx}'],
   },
   server: {
     host: true,

@@ -21,6 +21,11 @@
       href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600..800&family=Instrument+Sans:wght@400;500;600&family=DM+Mono:wght@400;500&display=swap"
     />
 
+    <script>
+      // El tema antes del primer pintado, también en el login (useTheme vive
+      // dentro de la app y llega tarde).
+      try { if (localStorage.getItem('entreno-theme') === 'dark') document.documentElement.dataset.theme = 'dark'; } catch (e) {}
+    </script>
     <style>
       /* Fondo pintado antes de que cargue el JS, para no ver un flash blanco. */
       html { background: #F7F1EA; }

@@ -4,9 +4,14 @@ import { Header } from './Header.jsx';
 import { WeekView } from './WeekView.jsx';
 import { DayView } from './DayView.jsx';
 import { Credits } from './Credits.jsx';
+import { SessionFooter } from './SessionFooter.jsx';
+import { AuthSplash } from '../../../auth/Login.jsx';
 
 export function EntrenoApp() {
-  const { day, view } = useEntreno();
+  const { day, view, ready } = useEntreno();
+
+  // Hasta el primer snapshot el log está vacío: pintar ya enseñaría ceros.
+  if (!ready) return <AuthSplash />;
 
   return (
     <div style={{ minHeight: '100vh', background: 'var(--bg)', paddingBottom: 56 }}>
@@ -21,6 +26,7 @@ export function EntrenoApp() {
       >
         {view === 'week' ? <WeekView /> : <DayView />}
         <Credits />
+        <SessionFooter />
       </main>
     </div>
   );

@@ -1,0 +1,33 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+    function whitelist() {
+      return /databases/$(database)/documents/entreno_settings/users;
+    }
+
+    function isUserAllowed() {
+      return request.auth != null
+          && request.auth.token.email_verified == true
+          && exists(whitelist())
+          && request.auth.token.email.lower() in get(whitelist()).data.allowedEmails;
+    }
+
+    // Lista blanca global. La crea el primer login, y solo puede crearla el
+    // dueño con su propio correo: así nadie más puede adelantarse y
+    // quedarse la app en el hueco entre el despliegue y ese primer login.
+    match /entreno_settings/users {
+      allow read: if request.auth != null;
+      allow create: if request.auth != null
+                    && request.auth.token.email_verified == true
+                    && request.auth.token.email == 'jjcadu@gmail.com'
+                    && request.resource.data.allowedEmails == ['jjcadu@gmail.com'];
+      allow update, delete: if isUserAllowed();
+    }
+
+    // Todo lo del usuario vive bajo su uid y solo lo toca él.
+    match /users/{uid}/{document=**} {
+      allow read, write: if isUserAllowed() && request.auth.uid == uid;
+    }
+  }
+}
