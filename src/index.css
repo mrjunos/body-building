@@ -2,7 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Tema y estilos portados verbatim desde el <helmet> de Entreno.dc.html. */
+/* Tema y estilos portados verbatim desde el <helmet> de Entreno.dc.html, la plantilla del canvas (en el historial de git). */
 :root{
   --bg:#F7F1EA; --surface:#FFFBF6; --surface-2:#F0E7DC; --line:#E4D8C9;
   --ink:#231A13; --ink-2:#584A3F; --muted:#8B7A6B;

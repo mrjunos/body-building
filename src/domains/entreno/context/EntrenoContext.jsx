@@ -3,7 +3,7 @@ import { collection, doc, onSnapshot, serverTimestamp, setDoc } from 'firebase/f
 import { db } from '../../../firebase.js';
 import { useAuth } from '../../../auth/AuthContext.jsx';
 import { DAYS, BY_KEY } from '../data/days.js';
-import { applySet, dateForKey, isoOf } from '../utils/entrenoHelpers.js';
+import { applyComment, applySet, dateForKey, isoOf } from '../utils/entrenoHelpers.js';
 import { migrateLegacyLog } from '../utils/migrateLegacyLog.js';
 import { useTheme } from '../hooks/useTheme.js';
 import { useWakeLock } from '../hooks/useWakeLock.js';
@@ -118,12 +118,8 @@ export function EntrenoProvider({ children, unit = 'kg', weightStep = 2.5 }) {
     [persist, log, iso, day]
   );
 
-  const setNotes = useCallback(
-    (value) => {
-      const next = Object.assign({}, log);
-      next[iso] = Object.assign({ dayKey: day.key, ex: {} }, next[iso] || {}, { notes: value });
-      persist(next, iso);
-    },
+  const setComment = useCallback(
+    (exKey, text) => persist(applyComment(log, iso, day.key, exKey, text), iso),
     [persist, log, iso, day]
   );
 
@@ -142,7 +138,7 @@ export function EntrenoProvider({ children, unit = 'kg', weightStep = 2.5 }) {
     current, view, openEx, activeSet, leadOpen, frames, theme, awake,
     // acciones
     selectDay, toggleView, toggleOpenEx, toggleActiveSet, cycleFrame,
-    writeSet, setNotes, resetDay,
+    writeSet, setComment, resetDay,
     toggleLead: () => setLeadOpen((v) => !v),
     toggleTheme, toggleAwake,
   };
