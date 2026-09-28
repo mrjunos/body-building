@@ -90,6 +90,24 @@ export function applySet(log, iso, dayKey, exKey, idx, len, patch) {
   return next;
 }
 
+/**
+ * Guarda el comentario de un ejercicio en un día, en `comments[exKey]`.
+ * Vacío o solo espacios lo borra, para no dejar claves huérfanas.
+ */
+export function applyComment(log, iso, dayKey, exKey, text) {
+  const next = Object.assign({}, log);
+  const day = Object.assign({ dayKey, notes: '', ex: {} }, next[iso] || {});
+  const comments = Object.assign({}, day.comments || {});
+  const clean = (text || '').trim();
+  if (clean) comments[exKey] = clean;
+  else delete comments[exKey];
+  day.comments = comments;
+  next[iso] = day;
+  return next;
+}
+
+export const commentFor = (log, iso, exKey) => (log[iso] && log[iso].comments && log[iso].comments[exKey]) || '';
+
 export function paceOf(min, km) {
   if (!num(min) || !num(km) || km <= 0) return '—';
   const p = min / km;

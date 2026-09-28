@@ -1,7 +1,6 @@
 import { useEntreno } from '../context/EntrenoContext.jsx';
 import { countDay } from '../utils/entrenoHelpers.js';
 import { DaySummaryCard } from './DaySummaryCard.jsx';
-import { NotesCard } from './NotesCard.jsx';
 import { ExerciseCard } from './ExerciseCard.jsx';
 import { InfoAccordion } from './InfoAccordion.jsx';
 
@@ -25,7 +24,6 @@ export function DayView() {
         }}
       >
         <DaySummaryCard />
-        <NotesCard />
       </aside>
 
       <section

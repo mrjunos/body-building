@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { applySet, countDay, paceOf, prFor, runInfo, sessionsFor, setsFor, shortDate } from './entrenoHelpers.js';
+import { applyComment, applySet, commentFor, countDay, paceOf, prFor, runInfo, sessionsFor, setsFor, shortDate } from './entrenoHelpers.js';
 import { BY_KEY } from '../data/days.js';
 
 const jue = BY_KEY.jue;
@@ -91,5 +91,25 @@ describe('runInfo', () => {
     expect(runInfo(BY_KEY.lun).mixes).toBe(false);
     // miércoles es carrera entera: no es mixto, el título ya lo dice
     expect(runInfo(BY_KEY.mie).mixes).toBe(false);
+  });
+});
+
+describe('applyComment', () => {
+  it('guarda el comentario sin tocar las series ni mutar el log', () => {
+    const log = applySet({}, '2026-09-10', 'jue', 'jalon_pecho', 0, 3, { w: 40, r: 8, done: true });
+    const next = applyComment(log, '2026-09-10', 'jue', 'jalon_pecho', '  agarre estrecho  ');
+    expect(commentFor(next, '2026-09-10', 'jalon_pecho')).toBe('agarre estrecho');
+    expect(next['2026-09-10'].ex).toEqual(log['2026-09-10'].ex);
+    expect(log['2026-09-10'].comments).toBeUndefined();
+  });
+  it('crea el día si no existía', () => {
+    const next = applyComment({}, '2026-09-10', 'jue', 'press_plano', 'hombro');
+    expect(next['2026-09-10']).toMatchObject({ dayKey: 'jue', ex: {}, comments: { press_plano: 'hombro' } });
+  });
+  it('vaciarlo borra la clave', () => {
+    const log = applyComment({}, '2026-09-10', 'jue', 'press_plano', 'hombro');
+    const next = applyComment(log, '2026-09-10', 'jue', 'press_plano', '   ');
+    expect(next['2026-09-10'].comments).toEqual({});
+    expect(commentFor(next, '2026-09-10', 'press_plano')).toBe('');
   });
 });

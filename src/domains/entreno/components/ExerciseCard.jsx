@@ -1,8 +1,10 @@
+import { useState } from 'react';
 import { useEntreno } from '../context/EntrenoContext.jsx';
 import { KINDVAR } from '../data/days.js';
 import { MAP, NAMES, gifFor, shot } from '../data/exercises.js';
-import { prFor, sessionsFor, setsFor, shortDate } from '../utils/entrenoHelpers.js';
+import { commentFor, prFor, sessionsFor, setsFor, shortDate } from '../utils/entrenoHelpers.js';
 import { SetRow } from './SetRow.jsx';
+import { CommentToggle, ExerciseComment } from './ExerciseComment.jsx';
 
 const mono = { fontFamily: "'DM Mono',monospace" };
 
@@ -27,7 +29,8 @@ function Thumb({ gif, photoStart, photoEnd }) {
 }
 
 export function ExerciseCard({ ex, index }) {
-  const { log, day, iso, unit, openEx, toggleOpenEx, frames, cycleFrame } = useEntreno();
+  const { log, day, iso, unit, openEx, toggleOpenEx, frames, cycleFrame, setComment } = useEntreno();
+  const [editingComment, setEditingComment] = useState(false);
   const kind = KINDVAR[day.kind];
   const m = MAP[ex.k];
   const open = openEx === index;
@@ -42,6 +45,13 @@ export function ExerciseCard({ ex, index }) {
   const sessions = sessionsFor(log, ex.k, iso);
   const prev = sessions[0];
   const pr = prFor(log, ex.k, iso);
+  const comment = commentFor(log, iso, ex.k);
+
+  // null = descartado con Escape; si no cambió nada, no se escribe.
+  const finishComment = (text) => {
+    setEditingComment(false);
+    if (text !== null && text.trim() !== comment) setComment(ex.k, text);
+  };
 
   const lastLine = prev
     ? ex.run
@@ -145,6 +155,12 @@ export function ExerciseCard({ ex, index }) {
           </div>
         </div>
 
+        <CommentToggle
+          hasComment={Boolean(comment)}
+          name={ex.n}
+          onClick={() => setEditingComment((v) => !v)}
+        />
+
         <button
           type="button"
           onClick={() => toggleOpenEx(index)}
@@ -185,6 +201,13 @@ export function ExerciseCard({ ex, index }) {
           {pr && <span style={{ color: 'var(--kind)' }}>{`· PR ${pr.w} ${unit} × ${pr.r}`}</span>}
         </p>
       )}
+
+      <ExerciseComment
+        value={comment}
+        editing={editingComment}
+        onEdit={() => setEditingComment(true)}
+        onDone={finishComment}
+      />
 
       {open && (
         <div
@@ -319,28 +342,35 @@ export function ExerciseCard({ ex, index }) {
                 Historial
               </p>
               <div style={{ display: 'flex', flexDirection: 'column', gap: 5 }}>
-                {sessions.slice(0, 6).map((s) => (
-                  <div
-                    key={s.iso}
-                    style={{
-                      display: 'flex',
-                      gap: 10,
-                      justifyContent: 'space-between',
-                      ...mono,
-                      fontSize: 11.5,
-                      fontVariantNumeric: 'tabular-nums',
-                      paddingBottom: 5,
-                      borderBottom: '1px solid var(--line)',
-                    }}
-                  >
-                    <span style={{ color: 'var(--muted)' }}>{shortDate(s.iso)}</span>
-                    <span style={{ color: 'var(--ink-2)', textAlign: 'right' }}>
-                      {ex.run
-                        ? s.sets.filter((x) => x && x.done).map((x) => `${x.km} km / ${x.min} min`).join(' · ')
-                        : s.sets.filter((x) => x && x.done).map((x) => `${x.w}×${x.r}`).join('  ')}
-                    </span>
-                  </div>
-                ))}
+                {sessions.slice(0, 6).map((s) => {
+                  const said = commentFor(log, s.iso, ex.k);
+                  return (
+                    <div key={s.iso} style={{ paddingBottom: 5, borderBottom: '1px solid var(--line)' }}>
+                      <div
+                        style={{
+                          display: 'flex',
+                          gap: 10,
+                          justifyContent: 'space-between',
+                          ...mono,
+                          fontSize: 11.5,
+                          fontVariantNumeric: 'tabular-nums',
+                        }}
+                      >
+                        <span style={{ color: 'var(--muted)' }}>{shortDate(s.iso)}</span>
+                        <span style={{ color: 'var(--ink-2)', textAlign: 'right' }}>
+                          {ex.run
+                            ? s.sets.filter((x) => x && x.done).map((x) => `${x.km} km / ${x.min} min`).join(' · ')
+                            : s.sets.filter((x) => x && x.done).map((x) => `${x.w}×${x.r}`).join('  ')}
+                        </span>
+                      </div>
+                      {said && (
+                        <p style={{ margin: '3px 0 0', fontSize: 12, fontStyle: 'italic', color: 'var(--muted)' }}>
+                          “{said}”
+                        </p>
+                      )}
+                    </div>
+                  );
+                })}
               </div>
             </div>
           )}
