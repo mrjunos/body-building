@@ -1,6 +1,7 @@
 // PR-preview-only harness. Import the real button, never the app/Firebase provider.
 import { useState } from 'react';
 import { createRoot } from 'react-dom/client';
+import { stepWeight } from '../../src/domains/entreno/utils/stepWeight.js';
 import { WeightButton } from '../../src/domains/entreno/components/WeightButton.jsx';
 
 const buttonStyle = { width: 100, height: 72, fontSize: 26, borderRadius: 12 };
@@ -10,7 +11,7 @@ export function WeightControlsTest() {
   const [visible, setVisible] = useState(true);
   const [steps, setSteps] = useState([]);
   const change = (delta) => {
-    setWeight((value) => Math.max(0, Math.round((value + delta) * 100) / 100));
+    setWeight((value) => stepWeight(value, delta));
     setSteps((values) => [...values.slice(-99), Math.round(performance.now())]);
   };
   const reset = (value) => { setWeight(value); setSteps([]); };

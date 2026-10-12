@@ -18,14 +18,29 @@ function Harness({ initial = { w: 20.5, r: 8, done: false }, run = false }) {
 }
 
 describe('SetRow weight controls', () => {
-  it('preserves historical fractional weights and changes by exactly one', () => {
+  it('keeps stored decimals until adjusting, then uses whole kilos', () => {
     render(<Harness />);
     expect(screen.getByText('20.5')).toBeInTheDocument();
     fireEvent.click(screen.getByRole('button', { name: 'Subir peso 1 kg' }));
-    expect(screen.getByText('21.5')).toBeInTheDocument();
+    expect(screen.getByText('21')).toBeInTheDocument();
     fireEvent.click(screen.getByRole('button', { name: 'Bajar peso 1 kg' }));
-    expect(screen.getByText('20.5')).toBeInTheDocument();
+    expect(screen.getByText('20')).toBeInTheDocument();
     expect(screen.getByText('8')).toBeInTheDocument();
+  });
+
+  it('snaps a fractional weight down and keeps decrementing whole kilos while held', () => {
+    vi.useFakeTimers();
+    render(<Harness />);
+    const less = screen.getByRole('button', { name: 'Bajar peso 1 kg' });
+    fireEvent.keyDown(less, { key: 'Enter' });
+    expect(screen.getByText('20')).toBeInTheDocument();
+    act(() => vi.advanceTimersByTime(400));
+    expect(screen.getByText('19')).toBeInTheDocument();
+    act(() => vi.advanceTimersByTime(250));
+    expect(screen.getByText('18')).toBeInTheDocument();
+    fireEvent.keyUp(less, { key: 'Enter' });
+    act(() => vi.advanceTimersByTime(1000));
+    expect(screen.getByText('18')).toBeInTheDocument();
   });
 
   it('never makes weight negative, including repeated holds', () => {
@@ -43,11 +58,11 @@ describe('SetRow weight controls', () => {
     vi.useFakeTimers();
     const { unmount } = render(<Harness />);
     fireEvent.keyDown(screen.getByRole('button', { name: 'Subir peso 1 kg' }), { key: ' ' });
-    expect(screen.getByText('21.5')).toBeInTheDocument();
+    expect(screen.getByText('21')).toBeInTheDocument();
     act(() => vi.advanceTimersByTime(400));
-    expect(screen.getByText('22.5')).toBeInTheDocument();
+    expect(screen.getByText('22')).toBeInTheDocument();
     act(() => vi.advanceTimersByTime(250));
-    expect(screen.getByText('23.5')).toBeInTheDocument();
+    expect(screen.getByText('23')).toBeInTheDocument();
     unmount();
     expect(vi.getTimerCount()).toBe(0);
   });
