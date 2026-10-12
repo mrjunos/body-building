@@ -1,6 +1,7 @@
 import { WeightButton } from './WeightButton.jsx';
 import { useEntreno } from '../context/EntrenoContext.jsx';
 import { KINDVAR } from '../data/days.js';
+import { stepWeight } from '../utils/stepWeight.js';
 import { paceOf } from '../utils/entrenoHelpers.js';
 
 const mono = { fontFamily: "'DM Mono',monospace" };
@@ -47,8 +48,8 @@ export function SetRow({ ex, exIndex, set, index }) {
           label: unit,
           weight: true,
           display: String(set.w),
-          dec: () => put({ w: Math.max(0, Math.round((set.w - weightStep) * 100) / 100), r: set.r }),
-          inc: () => put({ w: Math.round((set.w + weightStep) * 100) / 100, r: set.r }),
+          dec: () => put({ w: stepWeight(set.w, -1, weightStep), r: set.r }),
+          inc: () => put({ w: stepWeight(set.w, 1, weightStep), r: set.r }),
         },
         {
           label: 'Reps',
