@@ -1,3 +1,4 @@
+import { WeightButton } from './WeightButton.jsx';
 import { useEntreno } from '../context/EntrenoContext.jsx';
 import { KINDVAR } from '../data/days.js';
 import { paceOf } from '../utils/entrenoHelpers.js';
@@ -44,6 +45,7 @@ export function SetRow({ ex, exIndex, set, index }) {
     : [
         {
           label: unit,
+          weight: true,
           display: String(set.w),
           dec: () => put({ w: Math.max(0, Math.round((set.w - weightStep) * 100) / 100), r: set.r }),
           inc: () => put({ w: Math.round((set.w + weightStep) * 100) / 100, r: set.r }),
@@ -166,9 +168,11 @@ export function SetRow({ ex, exIndex, set, index }) {
               >
                 {f.label}
               </span>
-              <button type="button" onClick={f.dec} aria-label="Menos" style={stepper}>
-                −
-              </button>
+              {f.weight ? (
+                <WeightButton onStep={f.dec} aria-label={`Bajar peso ${weightStep} ${unit}`} style={stepper}>−</WeightButton>
+              ) : (
+                <button type="button" onClick={f.dec} aria-label="Menos" style={stepper}>−</button>
+              )}
               <span
                 style={{
                   flex: '1 1 auto',
@@ -182,9 +186,11 @@ export function SetRow({ ex, exIndex, set, index }) {
               >
                 {f.display}
               </span>
-              <button type="button" onClick={f.inc} aria-label="Más" style={stepper}>
-                +
-              </button>
+              {f.weight ? (
+                <WeightButton onStep={f.inc} aria-label={`Subir peso ${weightStep} ${unit}`} style={stepper}>+</WeightButton>
+              ) : (
+                <button type="button" onClick={f.inc} aria-label="Más" style={stepper}>+</button>
+              )}
             </div>
           ))}
           {ex.run && (

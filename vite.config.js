@@ -66,6 +66,10 @@ export default defineConfig({
   ],
   build: {
     rollupOptions: {
+      // The isolated QA page exists only in PR previews, never main/production builds.
+      ...(process.env.GITHUB_EVENT_NAME === 'pull_request' ? {
+        input: { app: 'index.html', 'weight-controls-test': 'tests/browser/weight-controls.html' },
+      } : {}),
       output: {
         manualChunks: {
           'vendor-react': ['react', 'react-dom'],
