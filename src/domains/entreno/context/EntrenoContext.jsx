@@ -26,7 +26,7 @@ export function useEntreno() {
  * entera se suscribe y se rearma en memoria con la forma { [iso]: día } de
  * siempre, así entrenoHelpers no sabe nada de Firestore.
  */
-export function EntrenoProvider({ children, unit = 'kg', weightStep = 2.5 }) {
+export function EntrenoProvider({ children, unit = 'kg', weightStep = 1 }) {
   const today = useMemo(() => new Date(), []);
   const todayIso = useMemo(() => isoOf(today), [today]);
   const todayKey = useMemo(

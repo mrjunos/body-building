@@ -6,6 +6,9 @@ App para llevar el entrenamiento desde el móvil, en el gimnasio.
 
 Abre en el día que toca. Cada ejercicio lleva su objetivo de series, repeticiones
 y RIR, y registras el peso y las reps de cada serie con botones grandes de + y −.
+En el peso, cada toque cambia 1 kg; mantener + o − pulsado repite cada vez más
+rápido, siempre de 1 en 1 y sin bajar de cero. También funciona con Espacio o
+Enter, y conserva los decimales de los pesos ya guardados.
 Guarda el historial, te enseña lo que levantaste la última vez y te marca el PR.
 Detrás del botón `i` de cada ejercicio están las fotos de inicio y final, la nota
 de técnica y las alternativas por si la máquina está ocupada.
